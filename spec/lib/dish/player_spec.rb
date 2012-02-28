@@ -1,6 +1,4 @@
 require_relative '../../spec_helper'
-# For Ruby < 1.9.3, use this instead of require_relative
-# require (File.expand_path('./../../../spec_helper', __FILE__))
  
 describe Dish::Player do
  
@@ -31,16 +29,22 @@ describe Dish::Player do
   end
 
   describe "GET profile" do
-
+   
     let(:player) { Dish::Player.new('simplebits') }
 
     before do
-      VCR.insert_cassette 'base', :record => :new_episodes
+      VCR.insert_cassette 'player', :record => :new_episodes
     end
 
     after do
       VCR.eject_cassette
     end
+    
+#   The following records the fixtures:    
+# 
+#   it "records the fixture" do
+#     Dish::Player.get('/players/simplebits')
+#   end
 
     it "must have a profile method" do
       player.must_respond_to :profile
