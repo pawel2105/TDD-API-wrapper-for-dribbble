@@ -3,15 +3,13 @@ require_relative '../../spec_helper'
 describe Dish::Player do
  
   describe "default attributes" do
- 
     it "must include httparty methods" do
       Dish::Player.must_include HTTParty
     end
  
     it "must have the base url set to the Dribble API endpoint" do
       Dish::Player.base_uri.must_equal 'http://api.dribbble.com'
-    end
-    
+    end 
   end
   
   describe "default instance attributes" do
@@ -25,7 +23,6 @@ describe Dish::Player do
     it "must have the right id" do
       player.username.must_equal 'simplebits'
     end
-
   end
 
   describe "GET profile" do
@@ -42,9 +39,9 @@ describe Dish::Player do
     
 #   The following records the fixtures:    
 # 
-#   it "records the fixture" do
-#     Dish::Player.get('/players/simplebits')
-#   end
+    it "records the fixture" do
+      Dish::Player.get('/players/simplebits')
+    end
 
     it "must have a profile method" do
       player.must_respond_to :profile
@@ -58,8 +55,7 @@ describe Dish::Player do
       player.profile["username"].must_equal "simplebits"
     end
 
-    describe "dynamic attributes" do
-      
+    describe "dynamic attributes" do 
       before do
         player.profile
       end
@@ -71,11 +67,9 @@ describe Dish::Player do
       it "must raise method missing if attribute is not present" do
         lambda { player.foo_attribute }.must_raise NoMethodError
       end
-      
     end
     
     describe "caching" do
-      
       before do
         player.profile
         stub_request(:any, /api.dribbble.com/).to_timeout
@@ -88,9 +82,6 @@ describe Dish::Player do
       it "must refresh the profile if forced" do
         lambda { player.profile(true) }.must_raise Timeout::Error
       end
-      
     end
-
   end
- 
 end

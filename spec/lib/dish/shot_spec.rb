@@ -12,7 +12,23 @@ describe Dish::Shot do
     end  
   end
   
+  describe "default instance attributes" do
+    
+    let(:shot) { Dish::Shot.new('21603') }
+
+    it "must have an id attribute" do
+      shot.must_respond_to :id
+    end
+
+    it "must have the right id" do
+      shot.id.must_equal '21603'
+    end
+  end
+  
   describe "GET shot" do
+    
+    let(:shot) { Dish::Shot.new('21603') }
+    
     before do
       VCR.insert_cassette 'shot', :record => :new_episodes
     end
@@ -21,11 +37,11 @@ describe Dish::Shot do
       VCR.eject_cassette
     end
 
-    # it "records the fixture" do
-    #   Dish::Shot.get('/shots/21603')
-    # end
+    it "records the fixture" do
+      Dish::Shot.get('/shots/21603')
+    end
 
-    it "must have a shot_profile method" do
+    it "must have a shot profile method" do
       shot.must_respond_to :profile
     end
 
@@ -34,7 +50,7 @@ describe Dish::Shot do
     end
 
     it "must get the right shot" do
-      shot.profile["id"].must_equal 21603
+      shot.profile["title"].must_equal "Moon"
     end
     
     describe "dynamic attributes" do
@@ -43,11 +59,11 @@ describe Dish::Shot do
       end
       
       it "must return that attribute value if present in the profile" do
-        shot.id.must_equal 21603
+        shot.id.must_equal '21603'
       end
       
       it "must raise method missing if attribute is not present" do
-        lambda { player.foo_attribute }.must_raise NoMethodError
+        lambda { shot.foo_attribute }.must_raise NoMethodError
       end
     end
     

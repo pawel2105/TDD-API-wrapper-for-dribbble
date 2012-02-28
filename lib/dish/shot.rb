@@ -20,7 +20,7 @@ module Dish
     private
     
     def get_profile
-      self.class.get("/players/#{self.id}")
+      self.class.get("/shots/#{self.id}")
     end
 
   end
